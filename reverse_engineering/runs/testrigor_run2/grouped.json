@@ -1,0 +1,106 @@
+{
+  "login": [
+    {
+      "file": "page-002-img-01.png",
+      "path": "runs/testrigor_run2/extracted_images/page-002-img-01.png",
+      "text": "11/04/25 - 01:19:59 pm\npassed\nsteps: \nenter \"admin\" into \"username\"\nenter ***** into \"password\"\nclick \"login\"\n",
+      "meta": {
+        "reason": "matched keywords: {'login': 3, 'data_input': 1}"
+      }
+    }
+  ],
+  "navigation": [
+    {
+      "file": "page-003-img-01.png",
+      "path": "runs/testrigor_run2/extracted_images/page-003-img-01.png",
+      "text": "11/04/25 - 01:20:00 pm\npassed\nsteps: \nscroll down\n",
+      "meta": {
+        "reason": "no keywords matched, defaulting to navigation"
+      }
+    },
+    {
+      "file": "page-004-img-01.png",
+      "path": "runs/testrigor_run2/extracted_images/page-004-img-01.png",
+      "text": "11/04/25 - 01:20:01 pm\npassed\nsteps: \nclick \"pim\"\n",
+      "meta": {
+        "reason": "no keywords matched, defaulting to navigation"
+      }
+    },
+    {
+      "file": "page-005-img-01.png",
+      "path": "runs/testrigor_run2/extracted_images/page-005-img-01.png",
+      "text": "11/04/25 - 01:20:02 pm\npassed\nsteps: \nscroll down\n",
+      "meta": {
+        "reason": "no keywords matched, defaulting to navigation"
+      }
+    },
+    {
+      "file": "page-006-img-01.png",
+      "path": "runs/testrigor_run2/extracted_images/page-006-img-01.png",
+      "text": "11/04/25 - 01:20:02 pm\npassed\nsteps: \nscroll up\n",
+      "meta": {
+        "reason": "no keywords matched, defaulting to navigation"
+      }
+    },
+    {
+      "file": "page-007-img-01.png",
+      "path": "runs/testrigor_run2/extracted_images/page-007-img-01.png",
+      "text": "11/04/25 - 01:20:03 pm\npassed\nsteps: \nclick \"add employee\" on the right of \"employee list\"\n",
+      "meta": {
+        "reason": "no keywords matched, defaulting to navigation"
+      }
+    },
+    {
+      "file": "page-010-img-01.png",
+      "path": "runs/testrigor_run2/extracted_images/page-010-img-01.png",
+      "text": "11/04/25 - 01:20:08 pm\npassed\nsteps: \nwait 3 sec\nscroll up\n",
+      "meta": {
+        "reason": "no keywords matched, defaulting to navigation"
+      }
+    },
+    {
+      "file": "page-013-img-01.png",
+      "path": "runs/testrigor_run2/extracted_images/page-013-img-01.png",
+      "text": "11/04/25 - 01:20:13 pm\npassed\nsteps: \ncheck that page contains \"john michael\"\ncheck that page contains \"smith\"\n",
+      "meta": {
+        "reason": "no keywords matched, defaulting to navigation"
+      }
+    }
+  ],
+  "data_input": [
+    {
+      "file": "page-008-img-01.png",
+      "path": "runs/testrigor_run2/extracted_images/page-008-img-01.png",
+      "text": "11/04/25 - 01:20:05 pm\npassed\nsteps: \nenter \"john\" into \"first name\"\nenter \"michael\" into \"middle name\"\nenter \"smith\" into \"last name\"\nscroll down\n",
+      "meta": {
+        "reason": "matched keywords: {'data_input': 1}"
+      }
+    },
+    {
+      "file": "page-009-img-01.png",
+      "path": "runs/testrigor_run2/extracted_images/page-009-img-01.png",
+      "text": "11/04/25 - 01:20:05 pm\npassed\nsteps: \nclick \"save\"\n",
+      "meta": {
+        "reason": "matched keywords: {'data_input': 1}"
+      }
+    },
+    {
+      "file": "page-012-img-01.png",
+      "path": "runs/testrigor_run2/extracted_images/page-012-img-01.png",
+      "text": "11/04/25 - 01:20:11 pm\npassed\nsteps: \nenter \"john\" into \"employee name\"\nclick \"search\"\n",
+      "meta": {
+        "reason": "matched keywords: {'data_input': 1, 'feature_access': 1}"
+      }
+    }
+  ],
+  "feature_access": [
+    {
+      "file": "page-011-img-01.png",
+      "path": "runs/testrigor_run2/extracted_images/page-011-img-01.png",
+      "text": "11/04/25 - 01:20:10 pm\npassed\nsteps: \ncheck that page contains \"john smith\"\ncheck that page contains \"personal details\"\ncheck that page contains \"employee full name\"\nclick \"employee list\"\n",
+      "meta": {
+        "reason": "matched keywords: {'feature_access': 1}"
+      }
+    }
+  ]
+}

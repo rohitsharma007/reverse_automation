@@ -1,0 +1,22 @@
+enter "Admin" into "Username"
+click "Login"
+scroll down
+click "PIM"
+scroll down
+scroll up
+click "Add Employee"
+enter "John" into "First Name"
+enter "Michael" into "Middle Name"
+enter "Smith" into "Last Name"
+scroll down
+click "Save"
+wait 3 sec
+scroll up
+check that page contains "John Smith"
+check that page contains "Personal Details"
+check that page contains "Employee Full Name"
+click "Employee List"
+enter "John" into "Employee Name"
+click "Search"
+check that page contains "John Michael"
+check that page contains "Smith"

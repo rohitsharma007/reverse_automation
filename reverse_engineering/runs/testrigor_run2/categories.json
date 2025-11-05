@@ -1,0 +1,34 @@
+{
+  "login": [
+    "auth",
+    "login",
+    "password",
+    "username"
+  ],
+  "data_input": [
+    "enter",
+    "form",
+    "save"
+  ],
+  "feature_access": [
+    "details",
+    "search"
+  ],
+  "navigation": [
+    "back",
+    "continue",
+    "dashboard",
+    "home",
+    "menu",
+    "navigate",
+    "next",
+    "tab"
+  ],
+  "logout": [
+    "exit",
+    "log out",
+    "logout",
+    "sign out",
+    "signout"
+  ]
+}

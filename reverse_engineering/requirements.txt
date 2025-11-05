@@ -1,0 +1,7 @@
+pytesseract
+Pillow
+PyMuPDF
+pdfminer.six
+# Optional: only needed if using reference logo matching in filter_images.py
+imagehash
+Pillow

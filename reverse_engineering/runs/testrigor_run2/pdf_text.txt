@@ -1,0 +1,110 @@
+Test the full workflow of submitting a form or request, including confirmation messages, backend processing, and final status updates.
+
+Run #d9N7oWMHueuonpxXY
+
+Status Passed    Execution Time 15 sec
+
+Modified At November 04, 2025 - 01:20 PM    Executed by rohitbelurocks@gmail.com at November 04, 2025 - 01:19 PM
+
+Url https://opensource-demo.orangehrmlive.com/web/index.php/auth/login
+
+Built-in | OS X | Chrome
+
+Link to Execution: https://app.testrigor.com/test-suites/fR2Gd4wW6ahQAat86/test-cases/52fef356-ef63-494c-aefb-a2587f97142d/executions/ZdMp5AEwELPceBrKf
+
+11/04/25 - 01:19:59 PM
+
+Passed
+
+Steps: 
+enter "Admin" into "Username"
+enter ***** into "Password"
+click "Login"
+
+11/04/25 - 01:20:00 PM
+
+Passed
+
+Steps: 
+scroll down
+
+11/04/25 - 01:20:01 PM
+
+Passed
+
+Steps: 
+click "PIM"
+
+11/04/25 - 01:20:02 PM
+
+Passed
+
+Steps: 
+scroll down
+
+11/04/25 - 01:20:02 PM
+
+Passed
+
+Steps: 
+scroll up
+
+11/04/25 - 01:20:03 PM
+
+Passed
+
+Steps: 
+click "Add Employee" on the right of "Employee List"
+
+11/04/25 - 01:20:05 PM
+
+Passed
+
+Steps: 
+enter "John" into "First Name"
+enter "Michael" into "Middle Name"
+enter "Smith" into "Last Name"
+scroll down
+
+11/04/25 - 01:20:05 PM
+
+Passed
+
+Steps: 
+click "Save"
+
+11/04/25 - 01:20:08 PM
+
+Passed
+
+Steps: 
+wait 3 sec
+scroll up
+
+11/04/25 - 01:20:10 PM
+
+Passed
+
+Steps: 
+check that page contains "John Smith"
+check that page contains "Personal Details"
+check that page contains "Employee Full Name"
+click "Employee List"
+
+11/04/25 - 01:20:11 PM
+
+Passed
+
+Steps: 
+enter "John" into "Employee Name"
+click "Search"
+
+11/04/25 - 01:20:13 PM
+
+Passed
+
+Steps: 
+check that page contains "John Michael"
+check that page contains "Smith"
+
+

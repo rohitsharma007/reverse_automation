@@ -1,0 +1,178 @@
+{
+  "login": [
+    {
+      "file": "page-002-img-01.png",
+      "path": "runs/testrigor_run1/extracted_images/page-002-img-01.png",
+      "text": "11/04/25 - 12:51:00 pm\npassed\nsteps: \nenter \"admin\" into \"username\"\nenter ***** into \"password\"\nclick \"login\"\n",
+      "meta": {
+        "reason": "matched keywords: {'login': 4, 'data_input': 1}"
+      }
+    },
+    {
+      "file": "page-004-img-01.png",
+      "path": "runs/testrigor_run1/extracted_images/page-004-img-01.png",
+      "text": "11/04/25 - 12:51:03 pm\npassed\nsteps: \ncheck that page contains \"system users\"\nenter \"admin\" into \"username\"\nclick \"search\"\n",
+      "meta": {
+        "reason": "matched keywords: {'login': 2, 'data_input': 1, 'feature_access': 1}"
+      }
+    }
+  ],
+  "navigation": [
+    {
+      "file": "page-003-img-01.png",
+      "path": "runs/testrigor_run1/extracted_images/page-003-img-01.png",
+      "text": "11/04/25 - 12:51:01 pm\npassed\nsteps: \ncheck that page contains \"dashboard\"\nclick \"admin\"\n",
+      "meta": {
+        "reason": "matched keywords: {'navigation': 1}"
+      }
+    },
+    {
+      "file": "page-005-img-01.png",
+      "path": "runs/testrigor_run1/extracted_images/page-005-img-01.png",
+      "text": "11/04/25 - 12:51:03 pm\npassed\nsteps: \nclick \"reset\"\n",
+      "meta": {
+        "reason": "no keywords matched, defaulting to navigation"
+      }
+    },
+    {
+      "file": "page-006-img-01.png",
+      "path": "runs/testrigor_run1/extracted_images/page-006-img-01.png",
+      "text": "11/04/25 - 12:51:04 pm\npassed\nsteps: \nclick \"job\"\n",
+      "meta": {
+        "reason": "no keywords matched, defaulting to navigation"
+      }
+    },
+    {
+      "file": "page-007-img-01.png",
+      "path": "runs/testrigor_run1/extracted_images/page-007-img-01.png",
+      "text": "11/04/25 - 12:51:04 pm\npassed\nsteps: \nclick \"job titles\"\n",
+      "meta": {
+        "reason": "no keywords matched, defaulting to navigation"
+      }
+    },
+    {
+      "file": "page-008-img-01.png",
+      "path": "runs/testrigor_run1/extracted_images/page-008-img-01.png",
+      "text": "11/04/25 - 12:51:06 pm\npassed\nsteps: \ncheck that page contains \"job titles\"\nclick \"pim\"\n",
+      "meta": {
+        "reason": "no keywords matched, defaulting to navigation"
+      }
+    },
+    {
+      "file": "page-009-img-01.png",
+      "path": "runs/testrigor_run1/extracted_images/page-009-img-01.png",
+      "text": "11/04/25 - 12:51:06 pm\npassed\nsteps: \ncheck that page contains \"employee information\"\nscroll down\n",
+      "meta": {
+        "reason": "no keywords matched, defaulting to navigation"
+      }
+    },
+    {
+      "file": "page-010-img-01.png",
+      "path": "runs/testrigor_run1/extracted_images/page-010-img-01.png",
+      "text": "11/04/25 - 12:51:07 pm\npassed\nsteps: \nclick \"leave\"\n",
+      "meta": {
+        "reason": "no keywords matched, defaulting to navigation"
+      }
+    },
+    {
+      "file": "page-011-img-01.png",
+      "path": "runs/testrigor_run1/extracted_images/page-011-img-01.png",
+      "text": "11/04/25 - 12:51:08 pm\npassed\nsteps: \ncheck that page contains \"leave list\"\nclick \"time\"\n",
+      "meta": {
+        "reason": "no keywords matched, defaulting to navigation"
+      }
+    },
+    {
+      "file": "page-012-img-01.png",
+      "path": "runs/testrigor_run1/extracted_images/page-012-img-01.png",
+      "text": "11/04/25 - 12:51:08 pm\npassed\nsteps: \ncheck that page contains \"timesheets pending action\"\nclick \"recruitment\"\n",
+      "meta": {
+        "reason": "no keywords matched, defaulting to navigation"
+      }
+    },
+    {
+      "file": "page-015-img-01.png",
+      "path": "runs/testrigor_run1/extracted_images/page-015-img-01.png",
+      "text": "11/04/25 - 12:51:13 pm\npassed\nsteps: \ncheck that page contains \"employee reviews\"\nclick \"directory\"\n",
+      "meta": {
+        "reason": "no keywords matched, defaulting to navigation"
+      }
+    },
+    {
+      "file": "page-016-img-01.png",
+      "path": "runs/testrigor_run1/extracted_images/page-016-img-01.png",
+      "text": "11/04/25 - 12:51:13 pm\npassed\nsteps: \ncheck that page contains \"directory\"\nclick \"buzz\"\n",
+      "meta": {
+        "reason": "no keywords matched, defaulting to navigation"
+      }
+    },
+    {
+      "file": "page-017-img-01.png",
+      "path": "runs/testrigor_run1/extracted_images/page-017-img-01.png",
+      "text": "11/04/25 - 12:51:14 pm\npassed\nsteps: \ncheck that page contains \"buzz newsfeed\"\nclick \"what's on your mind?\"\n",
+      "meta": {
+        "reason": "no keywords matched, defaulting to navigation"
+      }
+    },
+    {
+      "file": "page-020-img-01.png",
+      "path": "runs/testrigor_run1/extracted_images/page-020-img-01.png",
+      "text": "11/04/25 - 12:51:16 pm\npassed\nsteps: \nscroll up\n",
+      "meta": {
+        "reason": "no keywords matched, defaulting to navigation"
+      }
+    }
+  ],
+  "data_input": [
+    {
+      "file": "page-013-img-01.png",
+      "path": "runs/testrigor_run1/extracted_images/page-013-img-01.png",
+      "text": "11/04/25 - 12:51:09 pm\npassed\nsteps: \ncheck that page contains \"candidates\"\nenter \"developer\" into \"keywords\"\nclick \"my info\"\n",
+      "meta": {
+        "reason": "matched keywords: {'data_input': 1}"
+      }
+    },
+    {
+      "file": "page-018-img-01.png",
+      "path": "runs/testrigor_run1/extracted_images/page-018-img-01.png",
+      "text": "11/04/25 - 12:51:15 pm\npassed\nsteps: \nenter \"this is a test post for exploratory testing\" into \"what's on your mind?\"\nclick \"claim\"\n",
+      "meta": {
+        "reason": "matched keywords: {'data_input': 1}"
+      }
+    }
+  ],
+  "feature_access": [
+    {
+      "file": "page-014-img-01.png",
+      "path": "runs/testrigor_run1/extracted_images/page-014-img-01.png",
+      "text": "11/04/25 - 12:51:12 pm\npassed\nsteps: \nwait 2 sec\ncheck that page contains \"personal details\"\nclick \"performance\"\n",
+      "meta": {
+        "reason": "matched keywords: {'feature_access': 1}"
+      }
+    },
+    {
+      "file": "page-019-img-01.png",
+      "path": "runs/testrigor_run1/extracted_images/page-019-img-01.png",
+      "text": "11/04/25 - 12:51:15 pm\npassed\nsteps: \ncheck that page contains \"employee claims\"\nclick \"search\"\n",
+      "meta": {
+        "reason": "matched keywords: {'feature_access': 1}"
+      }
+    },
+    {
+      "file": "page-021-img-01.png",
+      "path": "runs/testrigor_run1/extracted_images/page-021-img-01.png",
+      "text": "11/04/25 - 12:51:16 pm\npassed\nsteps: \nclick \"search\"\n",
+      "meta": {
+        "reason": "matched keywords: {'feature_access': 1}"
+      }
+    },
+    {
+      "file": "page-021-img-02.png",
+      "path": "runs/testrigor_run1/extracted_images/page-021-img-02.png",
+      "text": "11/04/25 - 12:51:16 pm\npassed\nsteps: \nclick \"search\"\n",
+      "meta": {
+        "reason": "matched keywords: {'feature_access': 1}"
+      }
+    }
+  ]
+}

@@ -1,0 +1,174 @@
+Verify the complete user journey from application login to successful logout, ensuring all intermediate functionalities like navigation, data in
+put, and feature access work as expected
+
+Run #d9N7oWMHueuonpxXY
+
+Status Passed    Execution Time 18 sec
+
+Modified At November 04, 2025 - 12:51 PM    Executed by rohitbelurocks@gmail.com at November 04, 2025 - 12:50 PM
+
+Url https://opensource-demo.orangehrmlive.com/web/index.php/auth/login
+
+Built-in | OS X | Chrome
+
+Link to Execution: https://app.testrigor.com/test-suites/fR2Gd4wW6ahQAat86/test-cases/0f8d691e-f468-4660-8a96-7f65e8067007/executions/8tdqT7BbMqM5pbbMQ
+
+11/04/25 - 12:51:00 PM
+
+Passed
+
+Steps: 
+enter "Admin" into "Username"
+enter ***** into "Password"
+click "Login"
+
+11/04/25 - 12:51:01 PM
+
+Passed
+
+Steps: 
+check that page contains "Dashboard"
+click "Admin"
+
+11/04/25 - 12:51:03 PM
+
+Passed
+
+Steps: 
+check that page contains "System Users"
+enter "Admin" into "Username"
+click "Search"
+
+11/04/25 - 12:51:03 PM
+
+Passed
+
+Steps: 
+click "Reset"
+
+11/04/25 - 12:51:04 PM
+
+Passed
+
+Steps: 
+click "Job"
+
+11/04/25 - 12:51:04 PM
+
+Passed
+
+Steps: 
+click "Job Titles"
+
+11/04/25 - 12:51:06 PM
+
+Passed
+
+Steps: 
+check that page contains "Job Titles"
+click "PIM"
+
+11/04/25 - 12:51:06 PM
+
+Passed
+
+Steps: 
+check that page contains "Employee Information"
+scroll down
+
+11/04/25 - 12:51:07 PM
+
+Passed
+
+Steps: 
+click "Leave"
+
+11/04/25 - 12:51:08 PM
+
+Passed
+
+Steps: 
+check that page contains "Leave List"
+click "Time"
+
+11/04/25 - 12:51:08 PM
+
+Passed
+
+Steps: 
+check that page contains "Timesheets Pending Action"
+click "Recruitment"
+
+11/04/25 - 12:51:09 PM
+
+Passed
+
+Steps: 
+check that page contains "Candidates"
+enter "developer" into "Keywords"
+click "My Info"
+
+11/04/25 - 12:51:12 PM
+
+Passed
+
+Steps: 
+wait 2 sec
+check that page contains "Personal Details"
+click "Performance"
+
+11/04/25 - 12:51:13 PM
+
+Passed
+
+Steps: 
+check that page contains "Employee Reviews"
+click "Directory"
+
+11/04/25 - 12:51:13 PM
+
+Passed
+
+Steps: 
+check that page contains "Directory"
+click "Buzz"
+
+11/04/25 - 12:51:14 PM
+
+Passed
+
+Steps: 
+check that page contains "Buzz Newsfeed"
+click "What's on your mind?"
+
+11/04/25 - 12:51:15 PM
+
+Passed
+
+Steps: 
+enter "This is a test post for exploratory testing" into "What's on your mind?"
+click "Claim"
+
+11/04/25 - 12:51:15 PM
+
+Passed
+
+Steps: 
+check that page contains "Employee Claims"
+click "Search"
+
+11/04/25 - 12:51:16 PM
+
+Passed
+
+Steps: 
+scroll up
+
+11/04/25 - 12:51:16 PM
+
+Passed
+
+Steps: 
+click "Search"
+
+

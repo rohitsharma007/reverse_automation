@@ -1,0 +1,23 @@
+{
+  "login": [
+    "auth",
+    "login",
+    "password",
+    "user",
+    "username"
+  ],
+  "navigation": [
+    "dashboard"
+  ],
+  "data_input": [
+    "enter"
+  ],
+  "feature_access": [
+    "details",
+    "feature",
+    "search"
+  ],
+  "logout": [
+    "logout"
+  ]
+}
