@@ -387,11 +387,27 @@ class SelfHealingTestHelper {
   /**
    * Find input by label text (works even without proper label association)
    * This is specifically for OrangeHRM-style forms where labels are divs
+   * EXCLUDES sidebar/navigation to prevent false matches
    */
   async findInputByLabelText(labelText, options = {}) {
     console.log(`\n🔍 [Smart Input Find] Looking for input with label: "${labelText}"`);
 
     const strategies = [
+      {
+        desc: `Input group in main content (OrangeHRM .oxd-input-group)`,
+        find: async () => {
+          // Most specific: OrangeHRM's form structure in main content area only
+          // Excludes sidebar search and navigation
+          return this.page.locator('.oxd-table-filter, .oxd-form').locator(`.oxd-input-group:has-text("${labelText}") input`).first();
+        }
+      },
+      {
+        desc: `Form row with label in main content`,
+        find: async () => {
+          // Look in table filter or form areas, not sidebar
+          return this.page.locator('.oxd-table-filter, .oxd-form').locator(`div:has-text("${labelText}")`).locator('..').locator('input').first();
+        }
+      },
       {
         desc: `Proper label association`,
         find: async () => {
@@ -399,32 +415,16 @@ class SelfHealingTestHelper {
         }
       },
       {
-        desc: `Label text then sibling input`,
-        find: async () => {
-          const labelDiv = this.page.locator(`div:has-text("${labelText}")`).first();
-          return labelDiv.locator('..').locator('input').first();
-        }
-      },
-      {
-        desc: `Parent container with label text`,
+        desc: `Input group anywhere (broader search)`,
         find: async () => {
           return this.page.locator(`.oxd-input-group:has-text("${labelText}") input`).first();
         }
       },
       {
-        desc: `Generic container with label text`,
+        desc: `Label div then sibling input`,
         find: async () => {
-          const container = this.page.locator(`*:has-text("${labelText}")`).first();
-          return container.locator('input').first();
-        }
-      },
-      {
-        desc: `Textbox with nearby label`,
-        find: async () => {
-          // Find any textbox near the label text
-          return this.page.locator(`textbox`).filter({
-            has: this.page.locator(`text="${labelText}"`)
-          }).first();
+          const labelDiv = this.page.locator(`div:has-text("${labelText}")`).first();
+          return labelDiv.locator('..').locator('input').first();
         }
       },
       {

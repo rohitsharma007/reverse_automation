@@ -113,6 +113,70 @@ await helper.expectVisible('text=System Users', { text: 'System Users', timeout:
 
 ---
 
+### Issue #4: Wrong Input Found - Sidebar vs Form Context
+
+**Symptom:**
+```
+Error: expect(locator).toHaveValue(expected) failed
+Locator:  locator('div:has-text("Username")').first().locator('..').locator('input').first()
+Expected: ""
+Received: "Admin"
+
+The locator resolved to: <input placeholder="Search" class="oxd-input--active"/>
+```
+
+**Root Cause:**
+- Self-healing found the **sidebar Search input** (which had "Admin" typed earlier)
+- Instead of the **Username field in the System Users form** (which should be empty after Reset)
+- Both had text "Username" or "Admin" nearby, causing confusion
+
+**Page Structure:**
+```
+├─ Sidebar (navigation)
+│  └─ Search input (contains "Admin") ← WRONG - self-healing found this
+└─ Main Content (.oxd-table-filter)
+   └─ System Users Form
+      └─ Username input (should be empty) ← CORRECT - should find this
+```
+
+**Original Code:**
+```javascript
+// Self-healing strategy was too broad
+find: async () => {
+  const labelDiv = this.page.locator(`div:has-text("${labelText}")`).first();
+  return labelDiv.locator('..').locator('input').first();
+}
+// Found the FIRST div with "Username" anywhere on page (sidebar!)
+```
+
+**Solution Applied:**
+```javascript
+// Strategy 1: Most specific - only search in form areas
+find: async () => {
+  return this.page.locator('.oxd-table-filter, .oxd-form')
+    .locator(`.oxd-input-group:has-text("${labelText}") input`).first();
+}
+
+// Strategy 2: Scoped search in main content
+find: async () => {
+  return this.page.locator('.oxd-table-filter, .oxd-form')
+    .locator(`div:has-text("${labelText}")`).locator('..').locator('input').first();
+}
+// Now searches ONLY in form areas, excludes sidebar!
+```
+
+**Framework Response:**
+- Reordered strategies to prioritize **scoped searches** (form areas only)
+- Added `.oxd-table-filter, .oxd-form` container selectors to exclude sidebar
+- Most specific strategies try first (form context), broad searches last
+- Prevents false matches from navigation/sidebar elements
+
+**Lesson Learned:**
+✅ **ALWAYS scope input searches to main content/form areas, not entire page**
+✅ **Prioritize context-aware selectors (form containers) over page-wide searches**
+
+---
+
 ## Guardrails: Rules to Prevent Future Failures
 
 ### Guardrail #1: Input Field Detection
