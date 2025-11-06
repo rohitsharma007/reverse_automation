@@ -71,8 +71,8 @@ test.describe('Complete User Journey - OrangeHRM', () => {
 
     // Step 10-12: Job and Job Titles
     await test.step('Navigate to Job section and Job Titles', async () => {
-      // Click Job menu (in Admin dropdown)
-      await page.getByRole('button', { name: 'Job' }).click();
+      // Click Job menu in Admin topbar navigation (not a button, it's a nav item)
+      await page.locator('.oxd-topbar-body-nav-tab-item').filter({ hasText: 'Job' }).click();
 
       // Click Job Titles
       await page.getByRole('link', { name: 'Job Titles' }).click();
