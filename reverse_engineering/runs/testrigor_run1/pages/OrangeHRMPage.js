@@ -128,8 +128,9 @@ class OrangeHRMPage {
   // Items that appear when clicking top nav dropdowns
 
   getDropdownItem(name) {
-    // Dropdown items are links that appear after clicking a top nav item
-    return this.page.getByRole('link', { name, exact: false });
+    // Dropdown items are menuitems that appear after clicking a top nav item
+    // (e.g., "Job Titles", "Pay Grades" under "Job" menu)
+    return this.page.getByRole('menuitem', { name, exact: false });
   }
 
   get jobTitlesLink() {
