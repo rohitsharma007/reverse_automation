@@ -27,6 +27,18 @@ module.exports = defineConfig({
         ...devices['Desktop Chrome'],
         // Use faster navigation strategies
         waitForLoadState: 'domcontentloaded',
+        // Configure proxy for container environment
+        proxy: process.env.HTTP_PROXY ? {
+          server: process.env.HTTP_PROXY,
+        } : undefined,
+        launchOptions: {
+          // Configure Chromium args for proxy compatibility
+          args: [
+            '--ignore-certificate-errors',
+            '--disable-web-security',
+            '--disable-features=IsolateOrigins,site-per-process',
+          ],
+        },
       },
     },
   ],
