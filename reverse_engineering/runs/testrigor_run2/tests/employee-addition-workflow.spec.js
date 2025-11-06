@@ -112,8 +112,8 @@ test.describe('Employee Addition Workflow - OrangeHRM', () => {
       // Click Save button
       await page.getByRole('button', { name: 'Save' }).click();
 
-      // Wait for save operation to complete by checking for Personal Details
-      await expect(page.getByText('Personal Details')).toBeVisible({ timeout: 10000 });
+      // Wait for save operation to complete using self-healing
+      await helper.expectVisible('text=Personal Details', { text: 'Personal Details', timeout: 10000 });
     });
 
     // Step 13-17: Verify employee was created
@@ -137,25 +137,13 @@ test.describe('Employee Addition Workflow - OrangeHRM', () => {
       // Click "Employee List" link
       await page.getByRole('link', { name: 'Employee List' }).click();
 
-      // Wait for Employee List page to load by checking for header
-      await expect(page.locator('h5:has-text("Employee Information")')).toBeVisible({ timeout: 10000 });
+      // Wait for Employee List page to load using self-healing
+      await helper.expectVisible('text=Employee Information', { text: 'Employee Information', timeout: 10000 });
 
-      // Enter employee name into search - OrangeHRM uses autocomplete input
-      // Find the autocomplete input specifically
-      const employeeNameInput = page.locator('div.oxd-autocomplete-text-input input').first();
+      // Enter employee name using self-healing (handles autocomplete inputs)
+      await helper.fillByLabel('Employee Name', firstName, { timeout: 10000 });
 
-      // Fallback to other methods if the specific selector doesn't work
-      if (!await employeeNameInput.isVisible({ timeout: 2000 }).catch(() => false)) {
-        // Try label-based approach
-        const inputByLabel = page.locator('label:has-text("Employee Name")').locator('..').locator('input');
-        if (await inputByLabel.isVisible({ timeout: 1000 }).catch(() => false)) {
-          await inputByLabel.fill(firstName);
-        }
-      } else {
-        await employeeNameInput.fill(firstName);
-      }
-
-      // Wait for autocomplete dropdown to appear (if it does)
+      // Wait briefly for autocomplete
       await page.waitForTimeout(500);
 
       // Click Search button

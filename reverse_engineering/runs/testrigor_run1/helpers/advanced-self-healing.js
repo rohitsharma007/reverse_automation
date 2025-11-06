@@ -385,6 +385,85 @@ class SelfHealingTestHelper {
   }
 
   /**
+   * Find input by label text (works even without proper label association)
+   * This is specifically for OrangeHRM-style forms where labels are divs
+   */
+  async findInputByLabelText(labelText, options = {}) {
+    console.log(`\n🔍 [Smart Input Find] Looking for input with label: "${labelText}"`);
+
+    const strategies = [
+      {
+        desc: `Proper label association`,
+        find: async () => {
+          return this.page.getByLabel(labelText).first();
+        }
+      },
+      {
+        desc: `Label text then sibling input`,
+        find: async () => {
+          const labelDiv = this.page.locator(`div:has-text("${labelText}")`).first();
+          return labelDiv.locator('..').locator('input').first();
+        }
+      },
+      {
+        desc: `Parent container with label text`,
+        find: async () => {
+          return this.page.locator(`.oxd-input-group:has-text("${labelText}") input`).first();
+        }
+      },
+      {
+        desc: `Generic container with label text`,
+        find: async () => {
+          const container = this.page.locator(`*:has-text("${labelText}")`).first();
+          return container.locator('input').first();
+        }
+      },
+      {
+        desc: `Textbox with nearby label`,
+        find: async () => {
+          // Find any textbox near the label text
+          return this.page.locator(`textbox`).filter({
+            has: this.page.locator(`text="${labelText}"`)
+          }).first();
+        }
+      },
+      {
+        desc: `Input by placeholder matching label`,
+        find: async () => {
+          return this.page.getByPlaceholder(new RegExp(labelText, 'i')).first();
+        }
+      }
+    ];
+
+    let lastError = null;
+
+    for (const strategy of strategies) {
+      try {
+        console.log(`🔄 Trying: ${strategy.desc}`);
+        const input = await strategy.find();
+        await input.waitFor({ state: 'visible', timeout: options.timeout || 5000 });
+        console.log(`✅ SUCCESS with: ${strategy.desc}\n`);
+        return input;
+      } catch (error) {
+        console.log(`   ❌ Failed: ${error.message.split('\n')[0]}`);
+        lastError = error;
+        continue;
+      }
+    }
+
+    throw new Error(`Could not find input for label "${labelText}" after trying ${strategies.length} strategies. Last error: ${lastError?.message}`);
+  }
+
+  /**
+   * Fill input by label text (even without proper label association)
+   */
+  async fillByLabel(labelText, value, options = {}) {
+    const input = await this.findInputByLabelText(labelText, options);
+    await input.fill(value);
+    console.log(`✅ Filled "${labelText}" with value`);
+  }
+
+  /**
    * Get test diagnostics
    */
   getDiagnostics() {
