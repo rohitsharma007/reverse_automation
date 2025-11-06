@@ -74,8 +74,8 @@ test.describe('Complete User Journey - OrangeHRM', () => {
       // Click Job menu in Admin topbar navigation (not a button, it's a nav item)
       await page.locator('.oxd-topbar-body-nav-tab-item').filter({ hasText: 'Job' }).click();
 
-      // Click Job Titles
-      await page.getByRole('link', { name: 'Job Titles' }).click();
+      // Click Job Titles (it's a menuitem in the dropdown, not a link)
+      await page.getByRole('menuitem', { name: 'Job Titles' }).click();
 
       // Verify Job Titles page using self-healing
       await helper.expectVisible('text=Job Titles', { text: 'Job Titles', timeout: 10000 });
