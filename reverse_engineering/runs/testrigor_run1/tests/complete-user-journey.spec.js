@@ -1,4 +1,5 @@
 const { test, expect } = require('@playwright/test');
+const { SelfHealingTestHelper } = require('../helpers/advanced-self-healing');
 require('dotenv').config();
 
 /**
@@ -10,6 +11,8 @@ require('dotenv').config();
  * My Info, Performance, Directory, Buzz, and Claim.
  *
  * Source: testrigor_run1 manual steps
+ *
+ * ENHANCED: Uses AI-powered self-healing framework for automatic error recovery
  */
 
 test.describe('Complete User Journey - OrangeHRM', () => {
@@ -18,6 +21,9 @@ test.describe('Complete User Journey - OrangeHRM', () => {
     const baseURL = process.env.BASE_URL || 'https://opensource-demo.orangehrmlive.com';
     const username = process.env.USERNAME || 'Admin';
     const password = process.env.PASSWORD || 'admin123';
+
+    // Initialize self-healing helper
+    const helper = new SelfHealingTestHelper(page);
 
     // Step 1-3: Login
     await test.step('Login to OrangeHRM', async () => {
@@ -33,8 +39,9 @@ test.describe('Complete User Journey - OrangeHRM', () => {
       await page.getByRole('button', { name: 'Login' }).click();
 
       // Wait for dashboard URL and element (stabilize login)
+      // Using self-healing helper to handle Dashboard strict mode violation
       await page.waitForURL(/dashboard/i, { timeout: 15000 });
-      await expect(page.getByText('Dashboard')).toBeVisible({ timeout: 10000 });
+      await helper.expectVisible('text=Dashboard', { text: 'Dashboard', timeout: 10000 });
     });
 
     // Step 4-9: Admin Module - Search and Reset
@@ -218,6 +225,9 @@ test.describe('Complete User Journey - OrangeHRM', () => {
     });
 
     console.log('✅ Complete user journey test completed successfully');
+
+    // Print AI self-healing summary
+    helper.printLearningSummary();
   });
 
 });
