@@ -1,4 +1,5 @@
 const { test, expect } = require('@playwright/test');
+const { SelfHealingTestHelper } = require('../helpers/advanced-self-healing');
 require('dotenv').config();
 
 /**
@@ -13,6 +14,8 @@ require('dotenv').config();
  * - Searching for the employee in the employee list
  *
  * Source: testrigor_run2 manual steps
+ *
+ * ENHANCED: Uses AI-powered self-healing framework for automatic error recovery
  */
 
 test.describe('Employee Addition Workflow - OrangeHRM', () => {
@@ -21,6 +24,9 @@ test.describe('Employee Addition Workflow - OrangeHRM', () => {
     const baseURL = process.env.BASE_URL || 'https://opensource-demo.orangehrmlive.com';
     const username = process.env.USERNAME || 'Admin';
     const password = process.env.PASSWORD || 'admin123';
+
+    // Initialize self-healing helper
+    const helper = new SelfHealingTestHelper(page);
 
     // Generate unique employee ID to avoid conflicts
     const timestamp = Date.now();
@@ -43,8 +49,9 @@ test.describe('Employee Addition Workflow - OrangeHRM', () => {
       await page.getByRole('button', { name: 'Login' }).click();
 
       // Wait for dashboard URL and element (stabilize login)
+      // Using self-healing helper to handle Dashboard strict mode violation
       await page.waitForURL(/dashboard/i, { timeout: 15000 });
-      await expect(page.getByText('Dashboard')).toBeVisible({ timeout: 10000 });
+      await helper.expectVisible('text=Dashboard', { text: 'Dashboard', timeout: 10000 });
     });
 
     // Step 3-6: Navigate to PIM module
@@ -169,12 +176,17 @@ test.describe('Employee Addition Workflow - OrangeHRM', () => {
       console.log(`✅ Employee "${firstName} ${middleName} ${lastName}" created and verified successfully`);
     });
 
+    // Print AI self-healing summary
+    helper.printLearningSummary();
   });
 
   test('Verify employee can be found after creation', async ({ page }) => {
     const baseURL = process.env.BASE_URL || 'https://opensource-demo.orangehrmlive.com';
     const username = process.env.USERNAME || 'Admin';
     const password = process.env.PASSWORD || 'admin123';
+
+    // Initialize self-healing helper
+    const helper = new SelfHealingTestHelper(page);
 
     // Login
     await page.goto(baseURL);
@@ -183,8 +195,9 @@ test.describe('Employee Addition Workflow - OrangeHRM', () => {
     await page.getByRole('button', { name: 'Login' }).click();
 
     // Wait for dashboard URL and element (stabilize login)
+    // Using self-healing helper to handle Dashboard strict mode violation
     await page.waitForURL(/dashboard/i, { timeout: 15000 });
-    await expect(page.getByText('Dashboard')).toBeVisible({ timeout: 10000 });
+    await helper.expectVisible('text=Dashboard', { text: 'Dashboard', timeout: 10000 });
 
     // Navigate to PIM
     await page.getByRole('link', { name: 'PIM' }).click();
@@ -196,6 +209,9 @@ test.describe('Employee Addition Workflow - OrangeHRM', () => {
     await expect(page.getByRole('link', { name: 'Employee List' })).toBeVisible();
 
     console.log('✅ Employee list verification test completed');
+
+    // Print AI self-healing summary
+    helper.printLearningSummary();
   });
 
 });
