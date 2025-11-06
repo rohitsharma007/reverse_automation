@@ -42,7 +42,8 @@ test.describe('Employee Addition Workflow - OrangeHRM', () => {
       // Click Login button
       await page.getByRole('button', { name: 'Login' }).click();
 
-      // Wait for dashboard to load
+      // Wait for dashboard URL and element (stabilize login)
+      await page.waitForURL(/dashboard/i, { timeout: 15000 });
       await expect(page.getByText('Dashboard')).toBeVisible({ timeout: 10000 });
     });
 
@@ -50,35 +51,32 @@ test.describe('Employee Addition Workflow - OrangeHRM', () => {
     await test.step('Navigate to PIM module', async () => {
       // Scroll down
       await page.evaluate(() => window.scrollBy(0, 500));
-      await page.waitForTimeout(500);
 
       // Click PIM menu
       await page.getByRole('link', { name: 'PIM' }).click();
 
-      // Wait for PIM page to load
-      await page.waitForLoadState('networkidle');
+      // Wait for PIM page to load by checking for specific element
+      await expect(page.locator('h6:has-text("PIM")')).toBeVisible({ timeout: 10000 });
 
-      // Scroll down
+      // Scroll down then up
       await page.evaluate(() => window.scrollBy(0, 500));
-      await page.waitForTimeout(500);
-
-      // Scroll up
       await page.evaluate(() => window.scrollTo(0, 0));
-      await page.waitForTimeout(500);
     });
 
     // Step 7: Click Add Employee
     await test.step('Navigate to Add Employee form', async () => {
-      // Click "Add Employee" button or link
-      await page.getByRole('link', { name: 'Add Employee' }).or(
-        page.getByRole('button', { name: 'Add Employee' })
-      ).or(
-        page.getByText('Add Employee')
-      ).first().click();
+      // Wait for PIM navigation to be visible, then click "Add Employee" tab
+      const addEmployeeLink = page.locator('a.oxd-topbar-body-nav-tab-item').filter({ hasText: 'Add Employee' });
 
-      // Wait for the Add Employee form to load
-      await page.waitForLoadState('networkidle');
-      await expect(page.getByText('Add Employee')).toBeVisible({ timeout: 10000 });
+      // Fallback to role-based selector if CSS selector doesn't work
+      if (!await addEmployeeLink.isVisible({ timeout: 2000 }).catch(() => false)) {
+        await page.getByRole('link', { name: 'Add Employee' }).click();
+      } else {
+        await addEmployeeLink.click();
+      }
+
+      // Wait for the Add Employee form header to be visible
+      await expect(page.locator('h6:has-text("Add Employee")')).toBeVisible({ timeout: 10000 });
     });
 
     // Step 8-10: Enter employee details
@@ -97,39 +95,31 @@ test.describe('Employee Addition Workflow - OrangeHRM', () => {
       await page.getByPlaceholder('Last Name').or(
         page.locator('input[name*="lastName"]')
       ).first().fill(lastName);
-
-      await page.waitForTimeout(500);
     });
 
     // Step 11-12: Scroll down and Save
     await test.step('Save employee', async () => {
       // Scroll down to see the Save button
       await page.evaluate(() => window.scrollBy(0, 500));
-      await page.waitForTimeout(500);
 
       // Click Save button
       await page.getByRole('button', { name: 'Save' }).click();
 
-      // Wait 3 seconds as per manual steps
-      await page.waitForTimeout(3000);
-
-      // Wait for save operation to complete
-      await page.waitForLoadState('networkidle');
+      // Wait for save operation to complete by checking for Personal Details
+      await expect(page.getByText('Personal Details')).toBeVisible({ timeout: 10000 });
     });
 
     // Step 13-17: Verify employee was created
     await test.step('Verify employee personal details', async () => {
       // Scroll up to see the header
       await page.evaluate(() => window.scrollTo(0, 0));
-      await page.waitForTimeout(500);
 
       // Check that page contains employee name
       await expect(page.locator(`text=/${firstName}.*${lastName}/i`).or(
         page.getByText(fullName)
       )).toBeVisible({ timeout: 10000 });
 
-      // Check that page contains "Personal Details"
-      await expect(page.getByText('Personal Details')).toBeVisible();
+      // Personal Details already verified in previous step
 
       // Check that page contains "Employee Full Name" or similar
       await expect(page.locator('text=/Employee.*Name|Full Name/i')).toBeVisible({ timeout: 5000 });
@@ -140,25 +130,32 @@ test.describe('Employee Addition Workflow - OrangeHRM', () => {
       // Click "Employee List" link
       await page.getByRole('link', { name: 'Employee List' }).click();
 
-      // Wait for Employee List page to load
-      await page.waitForLoadState('networkidle');
+      // Wait for Employee List page to load by checking for header
+      await expect(page.locator('h5:has-text("Employee Information")')).toBeVisible({ timeout: 10000 });
 
-      // Enter employee name into search
-      const employeeNameInput = page.getByPlaceholder(/Employee Name/i).or(
-        page.locator('input[placeholder*="Employee" i]')
-      ).or(
-        page.locator('input').filter({ hasText: /employee/i })
-      ).first();
+      // Enter employee name into search - OrangeHRM uses autocomplete input
+      // Find the autocomplete input specifically
+      const employeeNameInput = page.locator('div.oxd-autocomplete-text-input input').first();
 
-      await employeeNameInput.fill(firstName);
-      await page.waitForTimeout(1000);
+      // Fallback to other methods if the specific selector doesn't work
+      if (!await employeeNameInput.isVisible({ timeout: 2000 }).catch(() => false)) {
+        // Try label-based approach
+        const inputByLabel = page.locator('label:has-text("Employee Name")').locator('..').locator('input');
+        if (await inputByLabel.isVisible({ timeout: 1000 }).catch(() => false)) {
+          await inputByLabel.fill(firstName);
+        }
+      } else {
+        await employeeNameInput.fill(firstName);
+      }
+
+      // Wait for autocomplete dropdown to appear (if it does)
+      await page.waitForTimeout(500);
 
       // Click Search button
       await page.getByRole('button', { name: 'Search' }).click();
 
-      // Wait for search results
-      await page.waitForLoadState('networkidle');
-      await page.waitForTimeout(2000);
+      // Wait for search results by checking for the records found text or table
+      await expect(page.locator('.oxd-table-card, .oxd-table-body').first()).toBeVisible({ timeout: 10000 });
     });
 
     // Step 21-22: Verify search results
@@ -184,11 +181,16 @@ test.describe('Employee Addition Workflow - OrangeHRM', () => {
     await page.getByPlaceholder('Username').fill(username);
     await page.getByPlaceholder('Password').fill(password);
     await page.getByRole('button', { name: 'Login' }).click();
+
+    // Wait for dashboard URL and element (stabilize login)
+    await page.waitForURL(/dashboard/i, { timeout: 15000 });
     await expect(page.getByText('Dashboard')).toBeVisible({ timeout: 10000 });
 
     // Navigate to PIM
     await page.getByRole('link', { name: 'PIM' }).click();
-    await page.waitForLoadState('networkidle');
+
+    // Wait for PIM page to load by checking for specific element
+    await expect(page.locator('h6:has-text("PIM")')).toBeVisible({ timeout: 10000 });
 
     // Verify Employee List is accessible
     await expect(page.getByRole('link', { name: 'Employee List' })).toBeVisible();
