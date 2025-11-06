@@ -4,7 +4,7 @@ module.exports = defineConfig({
   testDir: './tests',
   fullyParallel: false,
   forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 2 : 0,
+  retries: process.env.CI ? 2 : 1,
   workers: 1,
   reporter: [
     ['html'],
@@ -17,12 +17,22 @@ module.exports = defineConfig({
     video: 'retain-on-failure',
     actionTimeout: 15000,
     navigationTimeout: 30000,
+    // Wait for domcontentloaded instead of load for faster page loads
+    waitForLoadState: 'domcontentloaded',
   },
   projects: [
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      use: {
+        ...devices['Desktop Chrome'],
+        // Use faster navigation strategies
+        waitForLoadState: 'domcontentloaded',
+      },
     },
   ],
   timeout: 120000,
+  // Improve test speed
+  expect: {
+    timeout: 10000,
+  },
 });

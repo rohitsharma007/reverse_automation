@@ -32,7 +32,8 @@ test.describe('Complete User Journey - OrangeHRM', () => {
       // Click Login button
       await page.getByRole('button', { name: 'Login' }).click();
 
-      // Verify Dashboard is visible
+      // Wait for dashboard URL and element (stabilize login)
+      await page.waitForURL(/dashboard/i, { timeout: 15000 });
       await expect(page.getByText('Dashboard')).toBeVisible({ timeout: 10000 });
     });
 
@@ -49,11 +50,15 @@ test.describe('Complete User Journey - OrangeHRM', () => {
 
       // Click Search button
       await page.getByRole('button', { name: 'Search' }).click();
-      await page.waitForTimeout(1000);
+
+      // Wait for search to complete by checking records element
+      await expect(page.locator('.oxd-table-body, .oxd-table-card').first()).toBeVisible({ timeout: 5000 });
 
       // Click Reset button
       await page.getByRole('button', { name: 'Reset' }).click();
-      await page.waitForTimeout(1000);
+
+      // Wait for reset to complete
+      await expect(page.getByLabel('Username').first()).toHaveValue('', { timeout: 5000 });
     });
 
     // Step 10-12: Job and Job Titles
@@ -78,7 +83,6 @@ test.describe('Complete User Journey - OrangeHRM', () => {
 
       // Scroll down
       await page.evaluate(() => window.scrollBy(0, 500));
-      await page.waitForTimeout(500);
     });
 
     // Step 16-17: Leave Module
@@ -124,10 +128,7 @@ test.describe('Complete User Journey - OrangeHRM', () => {
       // Click My Info menu
       await page.getByRole('link', { name: 'My Info' }).click();
 
-      // Wait 2 seconds as per manual steps
-      await page.waitForTimeout(2000);
-
-      // Verify Personal Details
+      // Verify Personal Details (replaces the 2-second wait with explicit check)
       await expect(page.getByText('Personal Details')).toBeVisible({ timeout: 10000 });
     });
 
@@ -169,7 +170,9 @@ test.describe('Complete User Journey - OrangeHRM', () => {
 
         // Enter post content
         await buzzTextArea.fill('This is a test post for exploratory testing');
-        await page.waitForTimeout(1000);
+
+        // Verify text was entered
+        await expect(buzzTextArea).toHaveValue(/test post/i, { timeout: 5000 });
       }
     });
 
@@ -198,17 +201,20 @@ test.describe('Complete User Journey - OrangeHRM', () => {
     await test.step('Perform final scroll and search operations', async () => {
       // Scroll up
       await page.evaluate(() => window.scrollTo(0, 0));
-      await page.waitForTimeout(500);
 
       // Click Search (if visible)
       const searchButtons = page.getByRole('button', { name: 'Search' });
       const searchButton = searchButtons.first();
       if (await searchButton.isVisible({ timeout: 2000 }).catch(() => false)) {
         await searchButton.click();
+        // Wait for search results by checking for table or no records message
+        await Promise.race([
+          page.locator('.oxd-table-body, .oxd-table-card').first().waitFor({ timeout: 5000 }),
+          page.locator('text=/No Records/i').waitFor({ timeout: 5000 })
+        ]).catch(() => {
+          // Ignore if neither appears
+        });
       }
-
-      // Final wait to see results
-      await page.waitForTimeout(1000);
     });
 
     console.log('✅ Complete user journey test completed successfully');
