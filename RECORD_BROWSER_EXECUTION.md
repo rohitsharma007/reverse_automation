@@ -1,4 +1,90 @@
-# How to Record and View Browser Execution
+# Manual Test Case Generation From PDF Images (No Playwright)
+
+This guide focuses only on turning workflow PDFs into clear, human‑readable manual test cases.
+It removes any Playwright automation steps and sticks to image extraction, filtering, and
+test case generation.
+
+## Prerequisites
+- Python 3 available as `python3`.
+- Install dependencies once: `python3 -m pip install -r reverse_engineering/requirements.txt`
+- Optional for better text extraction: install Tesseract OCR (`brew install tesseract` on macOS).
+
+## One‑Shot Pipeline
+Use the orchestrator to run the entire manual pipeline in a single command.
+
+```
+cd reverse_engineering
+python3 run_pipeline.py --run <RUN_NAME> --pdf "/absolute/path/to/workflow.pdf"
+```
+
+Outputs under `reverse_engineering/runs/<RUN_NAME>/`:
+- `extracted_images/` — screenshots pulled from the PDF in sequence
+- `image_context.json` — image → {page, page_text}
+- `categories.json` — flow keywords inferred from the PDF text
+- `test_cases.md` — manual test cases per screenshot, grouped by flow
+- `grouped.json` — JSON grouping for traceability
+- `test_cases_consolidated.md` — consolidated, reviewer‑friendly summary
+
+## Step‑By‑Step (Manual Pipeline)
+If you prefer running each step yourself:
+
+1) Extract images + page context
+```
+cd reverse_engineering
+python3 extract_images_from_pdf.py \
+  "/absolute/path/to/workflow.pdf" \
+  runs/<RUN_NAME>/extracted_images \
+  runs/<RUN_NAME>/image_context.json
+```
+
+2) Derive categories from PDF text
+```
+python3 derive_categories_from_pdf.py \
+  "/absolute/path/to/workflow.pdf" \
+  runs/<RUN_NAME>
+```
+This writes `runs/<RUN_NAME>/categories.json` and `pdf_text.txt`.
+
+3) Filter headers/logos (keeps meaningful steps only)
+```
+python3 filter_images.py \
+  runs/<RUN_NAME>/extracted_images \
+  runs/<RUN_NAME>/image_context.json
+```
+Optional reference image (e.g., a logo to ignore):
+```
+python3 filter_images.py runs/<RUN_NAME>/extracted_images runs/<RUN_NAME>/image_context.json --ref /path/to/logo.png
+```
+
+4) Generate manual test cases
+```
+python3 generate_test_cases.py \
+  runs/<RUN_NAME>/extracted_images \
+  runs/<RUN_NAME>/test_cases.md \
+  runs/<RUN_NAME>/categories.json \
+  runs/<RUN_NAME>/image_context.json \
+  --consolidated
+```
+Key outputs:
+- `runs/<RUN_NAME>/test_cases.md` — per‑screenshot manual cases with actions/expected
+- `runs/<RUN_NAME>/test_cases_consolidated.md` — compact summary for reviews
+- `runs/<RUN_NAME>/grouped.json` — category grouping metadata
+
+## Alternative Input: Images Directory
+If your screenshots are already in a folder (not a PDF):
+```
+python3 run_pipeline.py --run <RUN_NAME> --images "/absolute/path/to/images" [--context "/path/to/image_context.json"]
+```
+When `--context` is not provided, a minimal placeholder is created.
+
+## Notes
+- Flows used by the generator: `login`, `navigation`, `data_input`, `feature_access`, `logout`.
+- OCR is used when available; otherwise, the page text from `image_context.json` helps categorize.
+- All outputs stay isolated per run in `reverse_engineering/runs/<RUN_NAME>/`.
+
+## What Was Removed
+This guide intentionally excludes Playwright automation, UI execution, and test runner options.
+For pure manual case generation, use the commands above.
 
 ## Quick Start (3 Steps)
 
