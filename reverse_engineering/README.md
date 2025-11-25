@@ -83,63 +83,6 @@ Preconditions: User has access to the app.
 ## Next: Consolidated Journeys (optional)
 If you prefer a single test case per flow with numbered steps, I can add an option to consolidate sequential screenshots into one "Login Flow" / "Navigation Flow" case for easier review.
 
-## ✨ NEW: Playwright Automation
+## Manual‑Only Workflow
 
-The project now includes **working Playwright automation scripts** that were generated from the reverse-engineered test cases!
-
-### Available Automation
-
-Each test run in the `runs/` directory now contains complete Playwright automation:
-
-**Testrigor Run 1** - Complete User Journey (38 steps)
-```bash
-cd runs/testrigor_run1
-npm install
-npm run install:browsers
-npm run test:headed
-```
-
-**Testrigor Run 2** - Employee Addition Workflow (23 steps)
-```bash
-cd runs/testrigor_run2
-npm install
-npm run install:browsers
-npm run test:headed
-```
-
-### Full Circle Workflow
-
-```
-PDF Screenshots → Extract Images → Generate Test Cases → Playwright Automation
-```
-
-The automation scripts:
-- ✅ Replicate the exact manual test steps
-- ✅ Run against OrangeHRM demo instance
-- ✅ Include comprehensive validations
-- ✅ Generate HTML test reports
-- ✅ Capture screenshots/videos on failure
-- ✅ Support headed/headless/debug modes
-
-### Quick Start
-
-1. **Run the reverse engineering pipeline** (if needed):
-   ```bash
-   python3 run_pipeline.py --run my_test --pdf "test.pdf"
-   ```
-
-2. **Run the generated automation**:
-   ```bash
-   cd runs/my_test
-   npm install
-   npm test
-   ```
-
-For detailed automation documentation, see:
-- `AUTOMATION_GUIDE.md` in the project root
-- `AUTOMATION_README.md` in each test run directory
-
-### Requirements for Automation
-- Node.js (v14+)
-- npm or yarn
-- Playwright (installed via npm)
+This repository now focuses strictly on manual test case generation from workflow PDFs. All references to Playwright and automation have been removed. Use the Python pipeline above to extract images, derive categories, and produce clear manual test cases for review and execution.
